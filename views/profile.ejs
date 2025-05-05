@@ -1,0 +1,87 @@
+<%- include('./partials/header'); %>
+
+<body class="bg-gray-100">
+
+  <!-- Navbar with Go Back Button -->
+  <nav class="bg-white shadow p-4">
+    <div class="max-w-5xl mx-auto flex items-center">
+      <button onclick="window.history.back()" class="flex items-center text-blue-600 hover:text-blue-800 font-semibold">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Go Back
+      </button>
+    </div>
+  </nav>
+
+  <!-- Profile Card Section -->
+  <div class="max-w-xl mx-auto bg-white rounded-xl shadow-md p-6 space-y-6 my-10">
+    <h1 class="text-2xl font-bold text-center text-gray-800">Your Profile</h1>
+
+    <% if (!user) { %>
+      <div class="text-center text-red-600 font-semibold">
+        You are not logged in.
+      </div>
+      <div class="text-center mt-4">
+        <a href="/users/login" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</a>
+      </div>
+    <% } else { %>
+
+      <div class="space-y-2">
+        <p><span class="font-semibold">Name:</span> <%= user.name %></p>
+        <p><span class="font-semibold">Email:</span> <%= user.email %></p>
+      </div>
+
+      <div class="mt-4">
+        <% if (user.addresses && user.addresses.length > 0) { %>
+          <h2 class="text-lg font-semibold mb-2">Saved Address</h2>
+          <div class="bg-gray-50 p-3 rounded-md text-gray-700">
+            <% const addr = user.addresses[0]; %>
+            <p><strong>Phone:</strong> <%= user.phone %></p>
+            <p><strong>Street:</strong> <%= addr.street %></p>
+            <p><strong>City:</strong> <%= addr.city %></p>
+            <p><strong>State:</strong> <%= addr.state %></p>
+            <p><strong>Zip Code:</strong> <%= addr.zipCode %></p>
+            <p><strong>Country:</strong> <%= addr.country %></p>
+          </div>
+
+          <!-- Update Address Form -->
+          <form action="/users/profile/address" method="POST" class="mt-4 space-y-2">
+            <h3 class="font-semibold">Update Address</h3>
+            <input type="text" name="phone" placeholder="Phone Number" pattern="\d{10}" required class="w-full p-2 border rounded" value="<%= user.phone %>" />
+            <input type="text" name="street" class="w-full p-2 border rounded" placeholder="Street" value="<%= addr.street %>" required />
+            <input type="text" name="city" class="w-full p-2 border rounded" placeholder="City" value="<%= addr.city %>" required />
+            <input type="text" name="state" class="w-full p-2 border rounded" placeholder="State" value="<%= addr.state %>" required />
+            <input type="text" name="zipCode" class="w-full p-2 border rounded" placeholder="Zip Code" value="<%= addr.zipCode %>" required />
+            <input type="text" name="country" class="w-full p-2 border rounded" placeholder="Country" value="<%= addr.country %>" required />
+            <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+              Update Address
+            </button>
+          </form>
+
+        <% } else { %>
+          <h2 class="text-lg font-semibold mb-2">Add Address</h2>
+          <!-- Add Address Form -->
+          <form action="/users/profile/address" method="POST" class="space-y-2">
+            <input type="text" name="phone" placeholder="Phone Number" pattern="\d{10}" required class="w-full p-2 border rounded" value="<%= user.phone %>" />
+            <input type="text" name="street" class="w-full p-2 border rounded" placeholder="Street" required />
+            <input type="text" name="city" class="w-full p-2 border rounded" placeholder="City" required />
+            <input type="text" name="state" class="w-full p-2 border rounded" placeholder="State" required />
+            <input type="text" name="zipCode" class="w-full p-2 border rounded" placeholder="Zip Code" required />
+            <input type="text" name="country" class="w-full p-2 border rounded" placeholder="Country" value="India" required />
+            <button type="submit"
+              class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">Add Address</button>
+          </form>
+        <% } %>
+      </div>
+
+      <!-- <div class="text-center">
+        <a href="/profile/change-password" class="text-blue-600 hover:underline text-sm">Change Password</a>
+      </div> -->
+
+    <% } %>
+  </div>
+
+  <%- include('./partials/footer'); %>
+</body>

@@ -1,0 +1,129 @@
+<!-- Footer Section -->
+<footer class="bg-gradient-to-br from-rose-100 via-orange-100   to-pink-200 py-12  transition-colors duration-300 border-t border-rose-200 shadow-inner ">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-y-12 md:gap-8">
+        
+        <!-- Brand Info -->
+        <div>
+          <h3 class="text-2xl font-extrabold mb-4 text-rose-700">Whimsy</h3>
+          <p class="text-gray-700 mb-4 text-sm leading-relaxed">Premium candies and treats to satisfy your sweet tooth. Whimsy delivers sweetness, one bite at a time.</p>
+          <div class="flex space-x-4">
+            <a href="#" aria-label="Facebook" class="text-gray-600 hover:text-rose-600 transition">
+              <i class="ri-facebook-fill text-xl"></i>
+            </a>
+            <a href="#" aria-label="Instagram" class="text-gray-600 hover:text-rose-600 transition">
+              <i class="ri-instagram-line text-xl"></i>
+            </a>
+            <a href="#" aria-label="Twitter" class="text-gray-600 hover:text-rose-600 transition">
+              <i class="ri-twitter-fill text-xl"></i>
+            </a>
+          </div>
+        </div>
+  
+        <!-- Shop Links -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-rose-800">Shop</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/products" class="text-gray-700 hover:text-rose-600 transition">All Products</a></li>
+            <li><a href="/products?category=candy" class="text-gray-700 hover:text-rose-600 transition">Candy</a></li>
+            <li><a href="/products?category=mouth-fresheners" class="text-gray-700 hover:text-rose-600 transition">Mouth Fresheners</a></li>
+            <li><a href="/products?category=fruit-jelly" class="text-gray-700 hover:text-rose-600 transition">Fruit Jelly</a></li>
+          </ul>
+        </div>
+  
+        <!-- Help Links -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-rose-800">Help</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/contact" class="text-gray-700 hover:text-rose-600 transition">Contact Us</a></li>
+            <li><a href="/faq" class="text-gray-700 hover:text-rose-600 transition">FAQs</a></li>
+            <li><a href="/shipping" class="text-gray-700 hover:text-rose-600 transition">Shipping & Returns</a></li>
+            <li><a href="/track" class="text-gray-700 hover:text-rose-600 transition">Track Order</a></li>
+          </ul>
+        </div>
+  
+        <!-- Newsletter -->
+<div class="">
+  <h3 class="text-lg font-semibold mb-4 text-rose-800">Newsletter</h3>
+  <p class="text-gray-700 text-sm mb-4">Subscribe to get special offers, deals & new launches.</p>
+
+  <form id="newsletterForm" class="flex">
+    <input id="newsletterEmail" type="email" placeholder="Your email"
+      class="px-4 py-2 w-full border border-rose-300 bg-white text-gray-800 placeholder-gray-400 rounded-l-md focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm"
+      required>
+    <button type="submit"
+      class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-r-md transition text-sm">
+      <i class="ri-send-plane-fill"></i>
+    </button>
+  </form>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="fixed top-5 right-5 bg-rose-600 text-white px-4 py-2 rounded shadow-lg opacity-0 pointer-events-none transition duration-300 text-sm z-50"></div>
+
+
+
+     
+    </div>
+     
+      <!-- Footer Bottom -->
+       
+      <div class="border-t border-rose-300 mt-12 pt-5">
+        <p id="footer-year" class="text-center text-sm text-gray-600"></p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Script to show current year -->
+  <script>
+    document.getElementById('footer-year').innerText = `© ${new Date().getFullYear()} Whimsy. All rights reserved.`;
+  </script>
+  
+
+
+  <!-- JS to Handle Form & Toast -->
+<script>
+  function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    
+    if (type === 'success') {
+      toast.className = "fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg opacity-100 transition duration-300 text-sm z-50";
+    } else {
+      toast.className = "fixed top-5 right-5 bg-rose-600 text-white px-4 py-2 rounded shadow-lg opacity-100 transition duration-300 text-sm z-50";
+    }
+  
+    setTimeout(() => {
+      toast.className = "fixed top-5 right-5 bg-rose-600 text-white px-4 py-2 rounded shadow-lg opacity-0 pointer-events-none transition duration-300 text-sm z-50";
+    }, 3000); // Hide after 3 seconds
+  }
+  
+  document.getElementById('newsletterForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+  
+    const email = document.getElementById('newsletterEmail').value;
+  
+    try {
+      const res = await fetch('/newsletter/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      });
+  
+      const data = await res.json();
+  
+      if (data.success) {
+        showToast('Thank you for subscribing! 🎉', 'success');
+        document.getElementById('newsletterForm').reset();
+      } else {
+        showToast(data.message, 'error');
+      }
+    } catch (error) {
+      console.error(error);
+      showToast('Something went wrong!', 'error');
+    }
+  });
+  </script>
+  

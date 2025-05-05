@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whimsy</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+     <!-- Swiper CSS -->
+    <!-- <link rel="stylesheet" href="/swiper/swiper-bundle.min.css" /> -->
+   
+    <script src="https://unpkg.com/@studio-freight/lenis"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    
+
+
+    <link href="/css/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-b from-gray-100 to-gray-200 min-h-screen">
+    <!-- Modern Navbar -->
+    <nav class="bg-gray-900 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Brand -->
+                <div class="flex items-center space-x-2">
+                    <span class="text-xl font-bold tracking-wide text-blue-400">AdminPanel</span>
+                </div>
+
+                <!-- Nav Links -->
+                <div class="hidden md:flex space-x-6">
+                    <a href="/" class="hover:text-blue-400 transition duration-200">Home</a>
+                    <a href="/admin/dashboard" class="hover:text-blue-400 transition duration-200">Dashboard</a>
+                    <a href="/admin/orders" class="hover:text-blue-400 transition duration-200">Orders</a>
+                </div>
+
+                <!-- Logout -->
+                <div class="flex items-center space-x-4">
+                    <form action="/admin/logout" method="GET">
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex flex-col min-h-screen">
+        <!-- Main content -->
+        <main class="flex-1 overflow-y-auto">
+            <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+
+                <!-- Header -->
+                <div class="mb-8 text-center">
+                    <h1 class="text-4xl font-bold text-gray-800 tracking-tight">🛍️ Product Management</h1>
+                    <p class="text-gray-600 mt-1">View and manage all listed products by category</p>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="mb-10 max-w-2xl mx-auto">
+                    <form action="/admin/products/search" method="GET" class="flex shadow-sm">
+                        <input type="text" name="product_id" placeholder="🔍 Search by Product ID"
+                            class="flex-grow px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-indigo-500 focus:border-indigo-500 outline-none text-gray-700">
+                        <button type="submit"
+                            class="bg-indigo-600 text-white px-6 py-2 rounded-r-lg hover:bg-indigo-700 transition">
+                            Search
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Product List by Category -->
+                <% for(let key in products){ %>
+                    <div class="bg-white shadow-lg rounded-2xl mb-12 p-6 border border-gray-200">
+                        <h2 class="text-2xl sm:text-3xl font-semibold text-gray-800 border-b pb-3 mb-6">
+                            📂 <%= key %>
+                        </h2>
+
+                        <!-- Grid for product cards -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <% products[key].forEach(function(elem){ %>
+                                <div class="bg-white p-5 rounded-xl shadow-md hover:shadow-xl transition duration-300 border border-gray-100">
+                                    <div class="flex justify-center mb-4">
+                                        <img class="w-40 h-40 object-cover rounded-lg shadow-sm border"
+                                            src="<%= elem.images[0] %>" alt="<%= elem.name %>">
+                                    </div>
+                                    <div class="text-center">
+                                        <h3 class="text-xl font-semibold text-gray-800"><%= elem.name %></h3>
+                                        <p class="text-gray-600 mt-1">💰 ₹<%= elem.price %></p>
+                                        <p class="text-gray-600">📦 Stock: <%= elem.stock %></p>
+                                        <p class="text-sm text-gray-500 mt-2 italic"><%= elem.description %></p>
+                                        <p class="text-xs text-gray-400 mt-2">🆔 <%= elem._id %></p>
+                                    </div>
+                                    <div class="mt-4 flex justify-center gap-5">
+                                        <a href="/products/delete/<%= elem._id %>"
+                                            class="text-red-600 hover:text-red-800 font-medium transition">Delete</a>
+                                        <a href="/products/update/<%= elem._id %>"
+                                            class="text-blue-600 hover:text-blue-800 font-medium transition">Update</a>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+
+                        <!-- See More Link -->
+                        <div class="mt-8 text-center">
+                            <a href="/admin/products?category=<%= key %>&page=2"
+                                class="inline-block text-indigo-600 hover:text-indigo-800 font-medium text-sm transition">
+                                ➕ See More from <%= key %>
+                            </a>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </main>
+    </div>
+</body>
+
+<%- include('./partials/footer'); %>

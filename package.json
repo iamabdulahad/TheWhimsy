@@ -1,0 +1,37 @@
+{
+  "name": "thewhimsy",
+  "version": "1.0.0",
+  "description": "Candy Store",
+  "main": "app.js",
+  "scripts": {
+    "build:css": "npx tailwind -i ./public/css/style.css -o ./public/css/output.css"
+  },
+  "author": "AbdulAhad",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.6.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.10.1",
+    "multer": "^1.4.5-lts.2",
+    "nodemailer": "^6.10.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "remixicon": "^4.6.0",
+    "swiper": "^11.2.6"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.3"
+  }
+}

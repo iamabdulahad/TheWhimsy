@@ -1,0 +1,92 @@
+<%- include('./partials/header'); %>
+
+
+
+
+<!-- Full width banner -->
+<div class="w-full">
+  <img src="https://static.vecteezy.com/system/resources/previews/008/857/991/non_2x/sweets-cakes-banner-horizontal-pink-cartoon-style-vector.jpg" alt="Candy Banner" class="w-full h-[300px] object-cover">
+</div>
+
+<!-- Main content -->
+<div class="flex flex-col md:flex-row px-4 md:px-12 py-8 gap-6">
+
+  <!-- Filters sidebar -->
+  <aside class="w-full md:w-1/4 space-y-6">
+    <h2 class="text-xl font-semibold">FILTERS</h2>
+
+    <!-- Availability -->
+    <div>
+      <h3 class="font-medium mb-2">Availability</h3>
+      <label class="block"><input type="checkbox" /> In stock (7)</label>
+      <label class="block"><input type="checkbox" disabled /> Out of stock (0)</label>
+    </div>
+
+    <!-- Price -->
+    <form id="filter-form" action="/products" method="GET">
+      <div>
+        <h3 class="font-medium mb-2">Price</h3>
+        <label class="block">
+          <input type="checkbox" name="price" value="0-100" onchange="this.form.submit()" <%= selectedPrices?.includes('0-100') ? 'checked' : '' %> />
+          ₹0 - ₹100
+        </label>
+        <label class="block">
+          <input type="checkbox" name="price" value="100-200" onchange="this.form.submit()" <%= selectedPrices?.includes('100-200') ? 'checked' : '' %> />
+          ₹100 - ₹200
+        </label>
+        <label class="block">
+          <input type="checkbox" name="price" value="200+" onchange="this.form.submit()" <%= selectedPrices?.includes('200+') ? 'checked' : '' %> />
+          ₹200+
+        </label>
+      </div>
+    </form>
+    
+
+  
+  </aside>
+
+  <!-- Products grid -->
+  <section class="w-full md:w-3/4">
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-lg font-semibold">7 products</span>
+      <select class="border px-2 py-1 rounded">
+        <option>Best selling</option>
+        <option>Price: Low to High</option>
+        <option>Price: High to Low</option>
+      </select>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% products.forEach(product => { %>
+          <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition">
+            <a href="/products/<%= product._id %>">
+              <div class="relative">
+                <% if (product.discount) { %>
+                  <span class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded">SAVE <%= product.discount %>%</span>
+                <% } %>
+                <img src="<%= product.images[0] %>" alt="<%= product.name %>" class="w-full h-96 object-cover">
+              </div>
+              <div class="p-4">
+                <h3 class="font-bold text-lg mb-1"><%= product.name %></h3>
+                <p class="text-sm text-gray-600 mb-1"><%= product.flavor %></p>
+                <p class="text-lg font-semibold text-green-600 mb-3">₹<%= product.price %></p>
+              </div>
+            </a>
+      
+            <div class="px-4 pb-4">
+              <form action="/cart/add" method="POST">
+                <input type="hidden" name="productId" value="<%= product._id %>">
+                <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 rounded">
+                  Add to Cart
+                </button>
+              </form>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+      
+      
+  </section>
+</div>
+
+<%- include('./partials/footer'); %>

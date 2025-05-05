@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/header') %>
+  <title>Track Order - Your Website Name</title>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+
+<!-- Navbar with Go Back Button -->
+<nav class="bg-white shadow p-4">
+    <div class="max-w-5xl mx-auto flex items-center">
+      <button onclick="window.history.back()" class="flex items-center text-blue-600 hover:text-blue-800 font-semibold">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Go Back
+      </button>
+    </div>
+  </nav>
+
+  <section class="max-w-md mx-auto px-4 py-16">
+    <h1 class="text-3xl font-bold text-rose-700 mb-8 text-center">Track Your Order</h1>
+
+    <form action="/order/track" method="POST" class="bg-white p-6 rounded-lg shadow-md space-y-4">
+      <div>
+        <label for="orderId" class="block text-gray-700 font-semibold mb-1">Order ID</label>
+        <input type="text" id="orderId" name="orderId" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm" placeholder="Enter your Order ID">
+      </div>
+
+      <div>
+        <label for="email" class="block text-gray-700 font-semibold mb-1">Email Address</label>
+        <input type="email" id="email" name="email" required
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm" placeholder="Enter your Email">
+      </div>
+
+      <button type="submit"
+        class="w-full bg-rose-600 hover:bg-rose-700 text-white py-2 rounded-md transition text-sm font-semibold">
+        Track Order
+      </button>
+    </form>
+  </section>
+
+  <%- include('partials/footer') %>
+
+</body>
+</html>
