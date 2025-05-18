@@ -1,0 +1,76 @@
+<%- include('partials/header') %>
+
+<div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Left: Address Section -->
+  <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow">
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">Select Delivery Address</h2>
+
+    <% if (user.addresses && user.addresses.length > 0) { %>
+      <form id="checkoutForm" action="/payment/initiate" method="POST">
+        <% user.addresses.forEach((addr, index) => { %>
+          <div class="border p-4 rounded mb-4 flex items-start gap-4">
+            <input
+              type="radio"
+              name="addressId"
+              value="<%= addr._id %>"
+              id="addr<%= index %>"
+              class="mt-1"
+              required
+            />
+            <label for="addr<%= index %>" class="block text-gray-700">
+              <strong><%= addr.street %></strong><br>
+              <%= addr.city %>, <%= addr.state %> - <%= addr.zipCode %><br>
+              <%= addr.country %><br>
+              <span class="text-sm text-gray-500">Phone: <%= user.phone %></span>
+            </label>
+          </div>
+        <% }) %>
+
+        <button
+          type="submit"
+          class="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded transition"
+        >
+          Pay Now ₹<%= total + (total >= 499 ? 0 : 40) %>
+        </button>
+      </form>
+    <% } else { %>
+      <p class="text-gray-600 mb-4">No address found. Please add one.</p>
+      <a href="/users/profile" class="text-purple-600 hover:underline font-medium">
+        + Add New Address
+      </a>
+    <% } %>
+  </div>
+
+  <!-- Right: Order Summary -->
+  <div class="bg-white p-6 rounded-lg shadow h-fit">
+    <h2 class="text-xl font-bold text-gray-800 mb-4">Order Summary</h2>
+
+    <div class="space-y-3">
+      <div class="flex justify-between text-gray-700">
+        <span>Subtotal (<%= cart.length %> items)</span>
+        <span>₹<%= subtotal %></span>
+      </div>
+
+      <% const shippingCharge = subtotal >= 499 ? 0 : 40; %>
+      <div class="flex justify-between text-gray-700">
+        <span>Shipping</span>
+        <span><%= shippingCharge === 0 ? "Free" : `₹${shippingCharge}` %></span>
+      </div>
+
+      <div class="border-t border-gray-200 pt-4 flex justify-between text-lg font-semibold text-gray-800">
+        <span>Total</span>
+        <span>₹<%= total + shippingCharge %> <span class="text-sm text-gray-500">(including all taxes)</span></span>
+        
+      </div>
+    </div>
+
+    <a
+      href="/cart"
+      class="mt-6 block text-center text-purple-600 hover:underline text-sm"
+    >
+      ← Back to Cart
+    </a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -25,7 +25,7 @@
           <h3 class="text-lg font-semibold mb-4 text-rose-800">Shop</h3>
           <ul class="space-y-2 text-sm">
             <li><a href="/products" class="text-gray-700 hover:text-rose-600 transition">All Products</a></li>
-            <li><a href="/products?category=candy" class="text-gray-700 hover:text-rose-600 transition">Candy</a></li>
+            <li><a href="/products?category=Candy" class="text-gray-700 hover:text-rose-600 transition">Candy</a></li>
             <li><a href="/products?category=mouth-fresheners" class="text-gray-700 hover:text-rose-600 transition">Mouth Fresheners</a></li>
             <li><a href="/products?category=fruit-jelly" class="text-gray-700 hover:text-rose-600 transition">Fruit Jelly</a></li>
           </ul>
@@ -58,6 +58,20 @@
   </form>
 </div>
 
+
+<!-- WhatsApp Floating Button -->
+
+<a
+href="https://wa.me/919717184121"
+target="_blank"
+class="fixed bottom-24 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg p-4 z-50"
+aria-label="Chat on WhatsApp"
+>
+<i class="ri-whatsapp-line text-3xl"></i> <!-- Remix Icon WhatsApp -->
+</a>
+
+
+
 <!-- Toast Notification -->
 <div id="toast" class="fixed top-5 right-5 bg-rose-600 text-white px-4 py-2 rounded shadow-lg opacity-0 pointer-events-none transition duration-300 text-sm z-50"></div>
 
@@ -79,7 +93,19 @@
     document.getElementById('footer-year').innerText = `© ${new Date().getFullYear()} Whimsy. All rights reserved.`;
   </script>
   
+  <script>
+    const lenis = new Lenis()
+  
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+  
+    requestAnimationFrame(raf)
+  
+    </script>
 
+ 
 
   <!-- JS to Handle Form & Toast -->
 <script>

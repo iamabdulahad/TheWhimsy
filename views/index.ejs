@@ -55,7 +55,7 @@
     <a href="#" class="relative h-40 w-[80vw] sm:h-[40vh] sm:w-[20vw] rounded-xl overflow-hidden shadow-lg group">
       <!-- Background Image -->
       <img
-        src="https://images-cdn.ubuy.co.in/66b742bdbff0ce35157246ce-ny-spice-shop-sweet-sauf-candy-mouth.jpg"
+        src="../images/mouth_freshners.jpg"
         alt="Candies"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
       />
@@ -78,7 +78,7 @@
     <a href="#" class="relative h-40 w-[80vw] sm:h-[40vh] sm:w-[20vw] rounded-xl overflow-hidden shadow-lg group">
       <!-- Background Image -->
       <img
-        src="https://www.govindam.co.in/wp-content/uploads/2025/01/Anardana-Goli-2.jpg"
+        src="../images/digestive.webp"
         alt="Candies"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
       />
@@ -101,7 +101,7 @@
     <a href="#" class="relative h-40 w-[80vw] sm:h-[40vh] sm:w-[20vw] rounded-xl overflow-hidden shadow-lg group">
       <!-- Background Image -->
       <img
-        src="https://www.jiomart.com/images/product/original/rvqfcbzplt/freshocartz-sugar-coated-brightly-coloured-jelly-bites-in-all-fruit-flavour-jelly-bites-200-g-product-images-orvqfcbzplt-p601711605-5-202307270159.jpg?im=Resize=(420,420)"
+        src="../images/fruitjelly.webp"
         alt="Candies"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
       />
@@ -124,7 +124,7 @@
     <a href="#" class="relative h-40 w-[80vw] sm:h-[40vh] sm:w-[20vw] rounded-xl overflow-hidden shadow-lg group">
       <!-- Background Image -->
       <img
-        src="//bulkcandystore.com/cdn/shop/files/sff161.jpg?v=1718306246&width=1500"
+        src="../images/all.webp"
         alt="Candies"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out"
       />
@@ -219,7 +219,7 @@
   </div>
 
   <!-- Main Box Content -->
-  <div class="bg-[#FDD663] h-[50%] flex justify-center items-center text-white text-2xl font-bold">
+  <div id="build" class="bg-[#FDD663] h-[50%] flex justify-center items-center text-white text-2xl font-bold">
     <!-- Your Content Goes Here -->
     <div class="relative w-full max-w-[95%] mx-auto overflow-hidden py-20 ">
       <!-- Left Arrow -->
@@ -250,9 +250,11 @@
         </div>
         <h2 class="text-center font-bold text-lg text-pink-700 mb-2"><%= product.name %></h2>
         <h2 class="text-black text-center mb-2">₹<%= product.price %></h2>
-        <button class="bg-pink-500 hover:bg-pink-600 text-white w-full py-2 rounded-full font-semibold transition">
-          Add to Cart
-        </button>
+        <a href="/cart/add/<%= product._id %>" 
+          class="inline-block bg-pink-500 hover:bg-pink-600 text-white text-center w-full py-2 rounded-full font-semibold transition duration-200">
+         Add to Cart
+       </a>
+       
       </div>
     </a>
   <% }); %>
@@ -318,10 +320,11 @@
   
 <div class="w-full text-center">
   <a href="/products"
-     class="inline-block h-14 w-52 lg:ml-0 md:ml-10 bg-pink-100 hover:bg-pink-200 text-black border-2 border-black rounded-full shadow-md transition-all duration-300 ease-in-out leading-[3.5rem] text-center font-medium">
+     class="inline-block h-14 w-52 lg:ml-0 md:ml-10 bg-[#DB2877] hover:bg-[#fe42a0] text-white border-2 border-white rounded-full shadow-md transition-all duration-300 ease-in-out leading-[3.5rem] text-center font-medium">
     View All Products
   </a>
 </div>
+
 
 
 
@@ -336,15 +339,15 @@
   
       <!-- Buttons -->
       <div class="mt-8 space-y-3 ">
-        <a href="#products">
+        <a href="#build">
           <div class="w-full sm:w-72 h-14 bg-[#241F21] rounded-full flex items-center justify-center transition-all duration-300 active:invert">
             <h1 class="text-white font-bold text-sm sm:text-base">BUILD YOUR OWN CART</h1>
           </div>
         </a>
   
-        <a href="#products">
+        <a href="/products">
           <div class="w-full sm:w-72 mt-5 lg:hidden h-14 border border-black bg-white rounded-full flex items-center justify-center transition-all duration-300 active:bg-[#241F21] group">
-            <h1 class="text-black font-bold text-sm sm:text-base group-active:text-white">BEST SELLER</h1>
+            <h1 class="text-black font-bold text-sm sm:text-base group-active:text-white uppercase">All Products</h1>
           </div>
         </a>
       </div>
@@ -353,7 +356,7 @@
     <!-- Image Section -->
     <div class="mt-10 lg:mt-0 lg:w-[50%] flex justify-center">
       <div class="w-[80vw] sm:w-[60vw] md:w-[50vw] lg:w-full h-[40vh] sm:h-[50vh] lg:h-full rounded-full overflow-hidden shadow-md">
-        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1601493701002-3223e7e1ebaf?q=80&w=3264&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Candy Image">
+        <img class="w-full h-full object-cover" src="../images/bachpan.avif" alt="Candy Image">
       </div>
     </div>
   </div>
@@ -479,16 +482,7 @@
 
         
           
-          <script>
-            const lenis = new Lenis()
           
-            function raf(time) {
-              lenis.raf(time)
-              requestAnimationFrame(raf)
-            }
-          
-            requestAnimationFrame(raf)
-          </script>
         
           <script>
             var swiper = new Swiper('.swiper-container', {
@@ -512,11 +506,23 @@
         </script>
 
 
+<% if (cartItemCount > 0) { %>
+  <a href="/cart"
+     class="fixed animate-bounce-once bottom-12 md:bottom-6 right-32 md:right-6 z-50 bg-gradient-to-r from-pink-500 to-pink-600 text-white px-6 py-3 shadow-2xl rounded-full flex items-center gap-3 hover:scale-105 transition-all duration-300 ease-in-out animate-bounce">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 5h14M10 21h.01M16 21h.01" />
+    </svg>
+    <span class="font-semibold">Cart (<%= cartItemCount %>)</span>
+  </a>
+<% } %>
+
+
+
 
 
 </body>
           <!-- Swiper JS (local or CDN) -->
-<!-- <script src="/swiper/swiper-bundle.min.js"></script> -->
+<script src="/swiper/swiper-bundle.min.js"></script>
 
        
    

@@ -72,7 +72,11 @@ router.post("/", upload.array("images"), async (req, res) => {
 
     await newProduct.save();
 
-    res.status(201).send("Product created successfully!");
+    // Send the newly created product with a success message
+    res.status(201).json({
+      message: "Product created successfully!",
+    
+    });
 
   } catch (err) {
     console.error("❌ Error while uploading product:", err);
@@ -95,6 +99,59 @@ router.get("/delete/:id", validateAdmin, async function(req, res) {
 
   return res.status(403).send("You are not allowed to delete this product."); 
 });
+
+
+
+router.get("/edit/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).send("Product not found");
+
+    res.render("edit_product", { product });
+  } catch (err) {
+    console.error("Error fetching product:", err);
+    res.status(500).send("Server error");
+  }
+});
+
+
+
+router.post("/edit/:id", upload.array("images"), async (req, res) => {
+try {
+const product = await Product.findById(req.params.id);
+if (!product) return res.status(404).send("Product not found");
+
+// Upload new images if any
+const imageUrls = product.images;
+if (req.files.length > 0) {
+for (let file of req.files) {
+const result = await cloudinary.uploader.upload(file.path, {
+folder: "ecommerce-products",
+});
+imageUrls.push(result.secure_url);
+fs.unlinkSync(file.path);
+}
+}
+
+const { name, price, category, stock, description } = req.body;
+
+product.name = name;
+product.price = price;
+product.category = category;
+product.stock = stock;
+product.description = description;
+product.images = imageUrls;
+
+await product.save();
+
+res.redirect("/admin/products"); // Redirect to product list or dashboard
+} catch (err) {
+console.error("❌ Error while updating product:", err);
+res.status(500).send("Something went wrong while updating product.");
+}
+});
+
+
 
 
 

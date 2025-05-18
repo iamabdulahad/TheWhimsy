@@ -1,8 +1,5 @@
 <%- include('./partials/header'); %>
 
-
-
-
 <!-- Full width banner -->
 <div class="w-full">
   <img src="https://static.vecteezy.com/system/resources/previews/008/857/991/non_2x/sweets-cakes-banner-horizontal-pink-cartoon-style-vector.jpg" alt="Candy Banner" class="w-full h-[300px] object-cover">
@@ -12,23 +9,41 @@
 <div class="flex flex-col md:flex-row px-4 md:px-12 py-8 gap-6">
 
   <!-- Filters sidebar -->
-  <aside class="w-full md:w-1/4 space-y-6">
-    <h2 class="text-xl font-semibold">FILTERS</h2>
+  <aside class="w-full md:w-1/4 space-y-6 md:sticky md:top-36 self-start max-h-[calc(100vh-2rem)] overflow-y-auto pr-2">
+    <h2 class="text-xl font-semibold hidden md:block">FILTERS</h2>
 
-    <!-- Availability -->
-    <div>
-      <h3 class="font-medium mb-2">Availability</h3>
-      <label class="block"><input type="checkbox" /> In stock (7)</label>
-      <label class="block"><input type="checkbox" disabled /> Out of stock (0)</label>
-    </div>
+    <!-- Category Filters -->
+    <form id="category-form" action="/products" method="GET" class="hidden md:block">
+      <div>
+        <h3 class="font-medium mb-2">Category</h3>
+        <% categories.forEach(cat => { %>
+          <label class="block">
+            <input 
+              type="checkbox" 
+              name="category" 
+              value="<%= cat.name %>" 
+              onchange="this.form.submit()"
+              <%= selectedCategories?.includes(cat.name) ? 'checked' : '' %>
+            />
+            <span class="inline-block w-3 h-3 rounded-full mr-2" style="background-color: <%= cat.color %>;"></span>
+            <%= cat.name %>
+          </label>
+        <% }) %>
+      </div>
 
-    <!-- Price -->
-    <form id="filter-form" action="/products" method="GET">
+      <!-- Preserve selected price filters -->
+      <% selectedPrices?.forEach(p => { %>
+        <input type="hidden" name="price" value="<%= p %>" />
+      <% }) %>
+    </form>
+
+    <!-- Price Filters -->
+    <form id="filter-form" class="hidden md:block" action="/products" method="GET">
       <div>
         <h3 class="font-medium mb-2">Price</h3>
         <label class="block">
           <input type="checkbox" name="price" value="0-100" onchange="this.form.submit()" <%= selectedPrices?.includes('0-100') ? 'checked' : '' %> />
-          ₹0 - ₹100
+          ₹0 - ₹100 
         </label>
         <label class="block">
           <input type="checkbox" name="price" value="100-200" onchange="this.form.submit()" <%= selectedPrices?.includes('100-200') ? 'checked' : '' %> />
@@ -39,53 +54,47 @@
           ₹200+
         </label>
       </div>
-    </form>
-    
 
-  
+      <!-- Preserve selected category filters -->
+      <% selectedCategories?.forEach(c => { %>
+        <input type="hidden" name="category" value="<%= c %>" />
+      <% }) %>
+    </form>
   </aside>
 
   <!-- Products grid -->
   <section class="w-full md:w-3/4">
     <div class="flex justify-between items-center mb-4">
-      <span class="text-lg font-semibold">7 products</span>
-      <select class="border px-2 py-1 rounded">
-        <option>Best selling</option>
-        <option>Price: Low to High</option>
-        <option>Price: High to Low</option>
-      </select>
+      <span class="text-lg font-semibold"><%= totalProducts %> products</span>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <% products.forEach(product => { %>
-          <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-            <a href="/products/<%= product._id %>">
-              <div class="relative">
-                <% if (product.discount) { %>
-                  <span class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded">SAVE <%= product.discount %>%</span>
-                <% } %>
-                <img src="<%= product.images[0] %>" alt="<%= product.name %>" class="w-full h-96 object-cover">
-              </div>
-              <div class="p-4">
-                <h3 class="font-bold text-lg mb-1"><%= product.name %></h3>
-                <p class="text-sm text-gray-600 mb-1"><%= product.flavor %></p>
-                <p class="text-lg font-semibold text-green-600 mb-3">₹<%= product.price %></p>
-              </div>
-            </a>
-      
-            <div class="px-4 pb-4">
-              <form action="/cart/add" method="POST">
-                <input type="hidden" name="productId" value="<%= product._id %>">
-                <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 rounded">
-                  Add to Cart
-                </button>
-              </form>
+      <% products.forEach(product => { %>
+        <div class="border rounded-lg overflow-hidden shadow hover:shadow-lg transition">
+          <a href="/products/<%= product._id %>">
+            <div class="relative">
+              <% if (product.discount) { %>
+                <span class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded">SAVE <%= product.discount %>%</span>
+              <% } %>
+              <img src="<%= product.images[0] %>" alt="<%= product.name %>" class="w-full h-96 object-cover">
             </div>
+            <div class="p-4">
+              <h3 class="font-bold text-lg mb-1"><%= product.name %></h3>
+              <p class="text-sm text-gray-600 mb-1"><%= product.flavor %></p>
+              <p class="text-lg font-semibold text-green-600 mb-3">₹<%= product.price %></p>
+            </div>
+          </a>
+          <div class="px-4 pb-4">
+            <form action="/cart/add/<%= product._id %>" method="get">
+              <input type="hidden" name="productId" value="<%= product._id %>">
+              <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 rounded">
+                Add to Cart
+              </button>
+            </form>
           </div>
-        <% }); %>
-      </div>
-      
-      
+        </div>
+      <% }); %>
+    </div>
   </section>
 </div>
 

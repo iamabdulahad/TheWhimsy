@@ -29,7 +29,7 @@ const ProductSchema = new mongoose.Schema(
     description: { 
       type: String, 
       trim: true,
-      maxlength: [1000, "Description cannot exceed 1000 characters"]
+      maxlength: [2000, "Description cannot exceed 2000 characters"]
     },
     images: { 
       type: [String], 
@@ -52,7 +52,7 @@ const validateProduct = (data) => {
     price: Joi.number().min(0).required(),
     category: Joi.string().hex().length(24).required(), // MongoDB ObjectId validation
     stock: Joi.number().min(0).required(), // ✅ updated
-    description: Joi.string().max(500).trim().allow(""),
+    description: Joi.string().max(2000).trim().allow(""),
     images: Joi.array().items(Joi.string().uri()).max(5), // Ensures valid URLs
   });
 

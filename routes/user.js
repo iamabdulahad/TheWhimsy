@@ -66,7 +66,7 @@ router.post("/profile/address", async (req, res) => {
 });
 
 
-// 📄 Render Registration Page
+//  Registration Page
 router.get('/register', (req, res) => {
   res.render('user_register', { 
     recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY,
@@ -249,19 +249,18 @@ router.get("/forgot-password", (req, res) => {
 
 
 const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false, // use TLS
+  service: "gmail",
   auth: {
-    user: process.env.BREVO_EMAIL,     // your brevo email
-    pass: process.env.BREVO_SMTP_KEY,  // your brevo SMTP key
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
   },
 });
+
 
 async function sendResetEmail(to, resetLink) {
   try {
     await transporter.sendMail({
-      from: `"Candy Shop" <${process.env.BREVO_EMAIL}>`,
+      from: `"Whimsy Shop" <${process.env.GMAIL_USER}>`,
       to,
       subject: "Reset your password",
       html: `
@@ -272,11 +271,12 @@ async function sendResetEmail(to, resetLink) {
       `,
     });
 
-    console.log("Reset email sent to", to);
+    // console.log("Reset email sent to", to);
   } catch (err) {
     console.error("Failed to send email:", err);
   }
 }
+
 
 
 // 📩 Send Reset Password Link via JWT Token
@@ -301,7 +301,7 @@ router.post("/forgot-password", async (req, res) => {
 
         
 
-        console.log("Reset Link:", resetLink);
+        // console.log("Reset Link:", resetLink);
 
         req.flash("success", "Password reset link has been sent to your email.");
         res.redirect("/users/forgot-password");

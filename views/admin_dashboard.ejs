@@ -105,33 +105,31 @@
                         </form>
                     </div>
 
-                    <!-- Category Form -->
-                    <div class="bg-white shadow-lg rounded-lg p-6">
-                        <h2 class="text-2xl font-semibold text-gray-800">Manage Categories</h2>
-                      <!-- Category Form -->
+                   <!-- Category Form -->
 <div class="bg-white shadow-lg rounded-lg p-6">
     <h2 class="text-2xl font-semibold text-gray-800">Manage Categories</h2>
     <form autocomplete="off" class="mt-4 space-y-4" action="/category/add" method="POST">
-        <h3 class="text-lg font-medium text-gray-700">Create or Update Category</h3>
-
-        <input type="text" name="name" placeholder="Category Name" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
-
-        <label class="block text-sm font-medium text-gray-700">Pick a Button Color</label>
-        <input type="color" name="color" value="#f3f4f6" class="w-16 h-10 border border-gray-300 rounded cursor-pointer">
-
-        <button type="submit" class="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition">
-            Save Category
-        </button>
+      <h3 class="text-lg font-medium text-gray-700">Create or Update Category</h3>
+      <input type="text" name="name" placeholder="Category Name" required
+        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+      
+      <label class="block text-sm font-medium text-gray-700">Category Color</label>
+      <input type="color" name="color" value="#000000"
+        class="w-full h-12 p-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+  
+      <button type="submit"
+        class="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition">
+        Save Category
+      </button>
     </form>
-</div>
-
-                    </div>
+  </div>
+  
                 </div>
             </div>
         </main>
     </div>
-
     
 </body>
 
 <%- include('./partials/footer'); %>
+

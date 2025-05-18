@@ -1,6 +1,22 @@
 <%- include('./partials/header'); %>
 
+ <!-- Navbar with Go Back Button -->
+ <nav class="bg-transparent sticky  p-4 top-28  z-50">
+  <div class="max-w-10xl mx-auto flex items-center">
+    <button onclick="window.history.back()" class="flex items-center text-black hover:text-blue-800 font-medium transition">
+      <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      Go Back
+    </button>
+  </div>
+</nav>
+
+
 <div class="max-w-screen-xl mx-auto px-6 py-20">
+
+   
 
   <!-- Breadcrumb -->
   <div class="text-sm text-gray-500 mb-4">
@@ -42,46 +58,41 @@
     <!-- Right Side - Details -->
     <div>
       <p class="text-sm text-gray-500"> <%= product.category.name %> </p>
-      <h1 class="text-3xl font-bold mb-2"><%= product.name %></h1>
+      <h1 class="text-3xl font-bold mb-2 uppercase"><%= product.name %></h1>
 
-      <div class="flex items-center space-x-4 mb-4">
+      <div class="flex items-center space-x-4 mb-4 mt-2">
         <p class="text-2xl font-semibold text-pink-700">Rs. <%= product.price %></p>
         <% if (product.originalPrice) { %>
           <p class="text-lg text-gray-400 line-through">Rs. <%= product.originalPrice %></p>
         <% } %>
       </div>
 
-      <!-- Quantity selector -->
-      <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
-        <div class="flex items-center border w-max rounded">
-          <button class="px-3 py-1 text-lg">−</button>
-          <input type="number" value="1" min="1" class="w-12 text-center outline-none">
-          <button class="px-3 py-1 text-lg">+</button>
-        </div>
-      </div>
+  
+
+
+
 
       <!-- Buttons -->
       <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
-        <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded">
+        <a  href="/cart/add/<%= product._id %>" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded">
           Add to Cart
-        </button>
-        <button class="bg-black hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded flex items-center gap-2">
+        </a>
+        <!-- <a href="/cart/add/<%= product._id %>" class="bg-black hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded flex items-center gap-2">
           🛒 Buy Now
-        </button>
+        </a href="/cart/add/<%= product._id %>"> -->
       </div>
 
       <!-- Razorpay note -->
-      <div class="mt-6 text-sm text-gray-500 border p-3 rounded shadow">
+      <!-- <div class="mt-6 text-sm text-gray-500 border p-3 rounded shadow">
         All payment modes available 
         <span class="float-right">Secured by 
           <img src="https://cdn.razorpay.com/static/assets/logo.svg" alt="razorpay" class="inline w-20" />
         </span>
-      </div>
+      </div> -->
 
       <!-- Info -->
       <div class="mt-6 text-sm text-gray-600">
-        <p><strong>Category:</strong> <%= product.category.name %></p> <br>
+       
         <p><strong>Description:</strong> <br> <br> <%= product.description %></p>
       </div>
     </div>
@@ -175,6 +186,9 @@
       thumbnail.classList.add('ring-2', 'ring-pink-400');
     }
   </script>
+
+
+
   
 
 <%- include('./partials/footer'); %>
