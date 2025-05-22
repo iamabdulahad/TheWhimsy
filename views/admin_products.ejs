@@ -70,6 +70,16 @@
                     </form>
                 </div>
 
+                <% if (error) { %>
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative max-w-2xl mx-auto mb-6">
+                      <strong class="font-bold">Error:</strong>
+                      <span class="block sm:inline"><%= error %></span>
+                    </div>
+                  <% } %>
+                  
+                  
+                  
+
                 <!-- Product List by Category -->
                 <% for(let key in products){ %>
                     <div class="bg-white shadow-lg rounded-2xl mb-12 p-6 border border-gray-200">
@@ -103,12 +113,12 @@
                         </div>
 
                         <!-- See More Link -->
-                        <div class="mt-8 text-center">
+                        <!-- <div class="mt-8 text-center">
                             <a href="/admin/products?category=<%= key %>&page=2"
                                 class="inline-block text-indigo-600 hover:text-indigo-800 font-medium text-sm transition">
                                 ➕ See More from <%= key %>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 <% } %>
             </div>

@@ -133,6 +133,8 @@ router.post("/contact", async (req, res) => {
 });
 
 
+
+
 router.get("/faq", (req, res) => {
   res.render("faq");
 });

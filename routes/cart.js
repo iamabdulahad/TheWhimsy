@@ -199,8 +199,75 @@ router.get('/checkout', userIsLoggedIn, async (req, res) => {
     });
   });
   
-  
 
+
+
+  // Place COD order
+router.post('/orders/place', userIsLoggedIn, async (req, res) => {
+    try {
+      const { addressId } = req.body;
+  
+      const user = await User.findById(req.user._id);
+      const addressObj = user.addresses.id(addressId);
+      if (!addressObj) return res.status(400).send("Address not found");
+  
+      const cartDoc = await Cart.findOne({ user: req.user._id }).populate('products.product');
+      if (!cartDoc || cartDoc.products.length === 0) return res.redirect('/cart');
+  
+      // Calculate totals
+      let subtotal = 0;
+      const orderProducts = cartDoc.products.map(item => {
+        subtotal += item.product.price * item.quantity;
+        return {
+          product: item.product._id,
+          quantity: item.quantity,
+          price: item.product.price
+        };
+      });
+  
+      const shipping = subtotal >= 499 ? 0 : 40;
+      const total = subtotal + shipping;
+  
+      // Create order
+      const newOrder = new Order({
+        user: req.user._id,
+        products: orderProducts,
+        totalAmount: total,
+        address: `${addressObj.street}, ${addressObj.city}, ${addressObj.state} - ${addressObj.zipCode}, ${addressObj.country}`,
+        paymentMethod: 'cod',
+        paymentStatus: 'pending',
+        status: 'pending'
+      });
+  
+      await newOrder.save();
+  
+      // Clear cart
+      await Cart.findOneAndDelete({ user: req.user._id });
+  
+      res.redirect(`/orders/success?id=${newOrder._id}`);
+    } catch (err) {
+      console.error("Order placement failed:", err);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+  
+  
+  router.post('/orders/fake-success', userIsLoggedIn, async (req, res) => {
+    // TODO: Save order to DB here (optional)
+    // Clear cart
+    await Cart.findOneAndUpdate(
+      { user: req.user._id },
+      { $set: { products: [] } }
+    );
+  
+    res.redirect('/cart/orders/success');
+  });
+
+  
+  router.get('/orders/success', userIsLoggedIn, (req, res) => {
+    res.render('order-success');
+  });
+  
   
 
 module.exports = router;

@@ -73,10 +73,11 @@ router.post("/", upload.array("images"), async (req, res) => {
     await newProduct.save();
 
     // Send the newly created product with a success message
-    res.status(201).json({
+    res.render("product-upload-success", {
       message: "Product created successfully!",
-    
+      product: newProduct,
     });
+    
 
   } catch (err) {
     console.error("❌ Error while uploading product:", err);
@@ -150,7 +151,6 @@ console.error("❌ Error while updating product:", err);
 res.status(500).send("Something went wrong while updating product.");
 }
 });
-
 
 
 

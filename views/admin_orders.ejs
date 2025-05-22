@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Orders</title>
+  <link href="/css/output.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100">
+
+<!-- Navbar -->
+<nav class="bg-gray-900 text-white sticky top-0 z-50 shadow-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center space-x-2">
+        <span class="text-xl font-bold tracking-wide text-blue-400">AdminPanel</span>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="/" class="hover:text-blue-400 transition">Home</a>
+        <a href="/admin/products" class="hover:text-blue-400 transition">Products</a>
+        <a href="/admin/orders" class="text-blue-400 font-semibold">Orders</a>
+      </div>
+      <form action="/admin/logout" method="GET">
+        <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+          Logout
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- Orders Section -->
+<div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 min-h-[80vh]">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Orders</h1>
+
+  <% if (orders && orders.length > 0) { %>
+    <div class="grid grid-cols-1 gap-6">
+      <% orders.forEach(order => { %>
+        <div class="bg-white rounded-lg shadow p-6">
+          <div class="flex justify-between items-center">
+            <h2 class="text-lg font-semibold text-gray-700">Order ID: <%= order._id %></h2>
+            <form action="/admin/orders/<%= order._id %>/status" method="POST" class="inline-block">
+              <select name="status" onchange="this.form.submit()" 
+                class="text-sm px-3 py-1 rounded-full border 
+                  <% if(order.status === 'delivered'){ %> border-green-600 text-green-700 
+                  <% } else if(order.status === 'shipped'){ %> border-blue-600 text-blue-700 
+                  <% } else if(order.status === 'cancelled'){ %> border-red-600 text-red-700
+                  <% } else { %> border-yellow-600 text-yellow-700 <% } %>">
+                <option value="pending" <%= order.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                <option value="shipped" <%= order.status === 'shipped' ? 'selected' : '' %>>Shipped</option>
+                <option value="delivered" <%= order.status === 'delivered' ? 'selected' : '' %>>Delivered</option>
+                <option value="cancelled" <%= order.status === 'cancelled' ? 'selected' : '' %>>Cancelled</option>
+              </select>
+            </form>
+            
+          </div>
+          <p class="mt-2 text-gray-600 text-sm">Placed on: <%= new Date(order.createdAt).toDateString() %></p>
+
+          <div class="mt-4">
+            <h3 class="text-md font-medium text-gray-800 mb-2">Items:</h3>
+            <ul class="space-y-1 pl-4 list-disc text-sm text-gray-700">
+              <% order.products.forEach(item => { %>
+                <li><%= item.product.name %> × <%= item.quantity %> @ ₹<%= item.price %></li>
+              <% }) %>
+            </ul>
+          </div>
+
+          <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <div>
+              <p><span class="font-medium text-gray-700">Customer:</span> <%= order.user.name %> (<%= order.user.email %>)</p>
+              <p><span class="font-medium text-gray-700">Phone:</span> <%= order.user.phone || 'N/A' %></p>
+            </div>
+            <div>
+              <p><span class="font-medium text-gray-700">Shipping Address:</span><br/>
+                <%= order.address %>
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-4 font-semibold text-gray-800">
+            Total: ₹<%= order.totalAmount %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div class="bg-white p-6 rounded-lg shadow text-center">
+      <h2 class="text-lg font-medium text-gray-700">No orders found.</h2>
+      <p class="text-sm text-gray-500 mt-2">You don't have any orders yet.</p>
+    </div>
+  <% } %>
+</div>
+
+<%- include('./partials/footer'); %>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Product Uploaded</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 p-6">
+
+  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md p-6">
+    <h1 class="text-2xl font-bold text-green-600 mb-4"><%= message %></h1>
+
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold">Product Details:</h2>
+      <ul class="mt-2">
+        <li><strong>Name:</strong> <%= product.name %></li>
+        <li><strong>Price:</strong> ₹<%= product.price %></li>
+        <li><strong>Category:</strong> <%= product.category %></li>
+        <li><strong>Stock:</strong> <%= product.stock %></li>
+        <li><strong>Description:</strong> <%= product.description %></li>
+        <li class="mt-2"><strong>Images:</strong></li>
+        <div class="flex flex-wrap gap-4 mt-2">
+          <% product.images.forEach(url => { %>
+            <img src="<%= url %>" class="w-32 h-32 object-cover rounded border" />
+          <% }); %>
+        </div>
+      </ul>
+    </div>
+
+    <a href="/admin/dashboard" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+      Return to Dashboard
+    </a>
+  </div>
+
+</body>
+</html>

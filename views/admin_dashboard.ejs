@@ -52,6 +52,8 @@
         <main class="flex-1 overflow-y-auto">
             <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
                 <!-- Dashboard Overview -->
+
+                  
                 <div class="mb-8 bg-white shadow-lg rounded-lg p-6">
                     <h2 class="text-2xl font-semibold text-gray-800">Dashboard Overview</h2>
                     <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -65,7 +67,7 @@
                         </div>
                         <div class="bg-gradient-to-r from-yellow-500 to-yellow-700 p-6 rounded-lg shadow-md text-white">
                             <h3 class="text-lg font-medium">New Orders</h3>
-                            <p class="mt-2 text-3xl font-bold">30</p>
+                            <p class="mt-2 text-3xl font-bold"><%= newOrders %></p>
                         </div>
                     </div>
                 </div>
@@ -123,6 +125,34 @@
       </button>
     </form>
   </div>
+
+  <!-- Newsletter Form -->
+<div class="bg-white shadow-lg rounded-lg p-6 mt-6">
+    <h2 class="text-2xl font-semibold text-gray-800">Send Newsletter</h2>
+    
+    <% if (success && success.length > 0) { %>
+        <div class="bg-green-100 text-green-800 p-3 rounded mt-4"><%= success[0] %></div>
+      <% } %>
+      <% if (error && error.length > 0) { %>
+        <div class="bg-red-100 text-red-800 p-3 rounded mt-4"><%= error[0] %></div>
+      <% } %>
+      
+      
+  
+    <form action="/admin/newsletter/send" method="POST" class="mt-4 space-y-4">
+      <input type="text" name="subject" placeholder="Subject" required
+        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      
+      <textarea name="message" placeholder="Your message" rows="5" required
+        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+  
+      <button type="submit"
+        class="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700 transition">
+        Send to All Subscribers
+      </button>
+    </form>
+  </div>
+  
   
                 </div>
             </div>

@@ -7,6 +7,8 @@ const { User } = require("../models/user");
 const jwt = require("jsonwebtoken");
 const axios = require("axios")
 const nodemailer = require("nodemailer");
+const userIsloggedin = require("../middlewares/userLoggin")
+const {Order} = require("../models/order")
 
 
 // 📄 Render Login Page
@@ -354,6 +356,25 @@ router.post("/reset-password/:token", async (req, res) => {
         req.flash("error", "Something went wrong");
         res.redirect("/users/forgot-password");
     }
+});
+
+
+
+router.get("/my-orders", userIsloggedin, async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const orders = await Order.find({ user: req.user._id })
+      .populate("products.product", "name price") // to get product details
+      .sort({ createdAt: -1 }); // latest first
+     
+
+
+    res.render("my_orders", { orders });
+  } catch (err) {
+    console.error("Error fetching user orders:", err);
+    res.status(500).send("Server Error");
+  }
 });
 
 
