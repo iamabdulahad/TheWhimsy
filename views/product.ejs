@@ -1,7 +1,7 @@
 <%- include('./partials/header'); %>
 
  <!-- Navbar with Go Back Button -->
- <nav class="bg-transparent sticky  p-4 top-28  z-50">
+ <nav class="bg-transparent md:sticky  p-4 top-28  z-50">
   <div class="max-w-10xl mx-auto flex items-center">
     <button onclick="window.history.back()" class="flex items-center text-black hover:text-blue-800 font-medium transition">
       <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
@@ -29,12 +29,12 @@
     <!-- Left Side - Images -->
     <div class="flex gap-4">
       <!-- Thumbnails -->
-      <div class="flex flex-col space-y-3">
+      <div class="flex flex-col space-y-5">
         <% product.images.forEach((img, i) => { %>
          <img
   src="<%= img %>"
   alt="thumb"
-  class="thumbnail w-20 sm:w-24 h-20 sm:h-24 object-cover border rounded cursor-pointer hover:ring-2 ring-pink-400"
+  class="thumbnail w-28 sm:w-24 h-20 sm:h-24 object-cover border rounded cursor-pointer hover:ring-2 ring-pink-400"
   onclick="changeMainImage('<%= img %>', this)"
 >
 
