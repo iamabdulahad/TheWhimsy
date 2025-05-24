@@ -31,12 +31,13 @@
       <!-- Thumbnails -->
       <div class="flex flex-col space-y-3">
         <% product.images.forEach((img, i) => { %>
-          <img
-            src="<%= img %>"
-            alt="thumb"
-            class="thumbnail w-16 h-16 object-cover border rounded cursor-pointer hover:ring-2 ring-pink-400"
-            onclick="changeMainImage('<%= img %>', this)"
-          >
+         <img
+  src="<%= img %>"
+  alt="thumb"
+  class="thumbnail w-20 sm:w-24 h-20 sm:h-24 object-cover border rounded cursor-pointer hover:ring-2 ring-pink-400"
+  onclick="changeMainImage('<%= img %>', this)"
+>
+
         <% }) %>
       </div>
 
@@ -77,28 +78,47 @@
         <a  href="/cart/add/<%= product._id %>" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded">
           Add to Cart
         </a>
-        <!-- <a href="/cart/add/<%= product._id %>" class="bg-black hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded flex items-center gap-2">
-          🛒 Buy Now
-        </a href="/cart/add/<%= product._id %>"> -->
+       
       </div>
 
       <!-- Razorpay note -->
-      <!-- <div class="mt-6 text-sm text-gray-500 border p-3 rounded shadow">
-        All payment modes available 
-        <span class="float-right">Secured by 
-          <img src="https://cdn.razorpay.com/static/assets/logo.svg" alt="razorpay" class="inline w-20" />
-        </span>
-      </div> -->
+     
 
       <!-- Info -->
-      <div class="mt-6 text-sm text-gray-600">
-       
-        <p><strong>Description:</strong> <br> <br> <%= product.description %></p>
-      </div>
-    </div>
+     
+<div class="mt-6  text-gray-600 space-y-4">
+  <div>
+    <p><strong>Description:</strong></p>
+    <p class="mt-1"><%= product.description %></p>
   </div>
+
+  <% if (product.weight) { %>
+    <div>
+      <p><strong>Weight:</strong></p>
+      <p class="mt-1"><%= product.weight %></p>
+    </div>
+  <% } %>
+
+  
+
+  <% if (product.about) { %>
+    <div>
+      <!-- <p><strong>About:</strong></p> -->
+      <p class="mt-1"><%= product.about %></p>
+    </div>
+  <% } %>
 </div>
 
+<% if (product.ingredients) { %>
+    <div class="mt-3">
+      <p><strong>Ingredients:</strong></p>
+      <p class="mt-1"><%= product.ingredients %></p>
+    </div>
+  <% } %>
+
+    </div>
+  </div>
+  </div>
 <style>
   .zoom-container {
     position: relative;
@@ -163,18 +183,21 @@
       zoomResult.style.backgroundPosition = `-${lensX * zoomFactor}px -${lensY * zoomFactor}px`;
     }
   
-    zoomContainer.addEventListener("mousemove", moveLens);
-  
-    zoomContainer.addEventListener("mouseenter", () => {
-      zoomLens.style.display = "block";
-      zoomResult.style.display = "block";
-      zoomResult.style.backgroundImage = `url('${mainImage.src}')`;
-    });
-  
-    zoomContainer.addEventListener("mouseleave", () => {
-      zoomLens.style.display = "none";
-      zoomResult.style.display = "none";
-    });
+    if (window.innerWidth >= 768) {
+  zoomContainer.addEventListener("mousemove", moveLens);
+
+  zoomContainer.addEventListener("mouseenter", () => {
+    zoomLens.style.display = "block";
+    zoomResult.style.display = "block";
+    zoomResult.style.backgroundImage = `url('${mainImage.src}')`;
+  });
+
+  zoomContainer.addEventListener("mouseleave", () => {
+    zoomLens.style.display = "none";
+    zoomResult.style.display = "none";
+  });
+}
+
   
     function changeMainImage(src, thumbnail) {
       mainImage.src = src;

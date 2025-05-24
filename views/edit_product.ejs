@@ -2,26 +2,20 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whimsy </title>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-     <!-- Swiper CSS -->
-    <!-- <link rel="stylesheet" href="/swiper/swiper-bundle.min.css" /> -->
-   
-    <script src="https://unpkg.com/@studio-freight/lenis"></script>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-    
-
-
-    <link href="/css/output.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whimsy</title>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/@studio-freight/lenis"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
+  <link href="/css/output.css" rel="stylesheet" />
 </head>
 
-
-<div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+<body>
+  <div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Edit Product</h2>
-  
+
     <form action="/products/edit/<%= product._id %>" method="POST" enctype="multipart/form-data" class="space-y-5">
       
       <!-- Product Name -->
@@ -29,55 +23,72 @@
         <label class="block text-gray-700 font-medium mb-1">Product Name</label>
         <input type="text" name="name" value="<%= product.name %>" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-4 py-2" required />
       </div>
-  
+
       <!-- Price -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Price</label>
         <input type="number" name="price" value="<%= product.price %>" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-4 py-2" required />
       </div>
-  
-      <!-- Category -->
-      <div>
-        <label class="block text-gray-700 font-medium mb-1">Category</label>
-        <input type="text" name="category" value="<%= product.category %>" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-4 py-2" required />
-      </div>
-  
+
+      
+
       <!-- Stock -->
       <div>
         <label class="block text-gray-700 font-medium mb-1">Stock</label>
         <input type="number" name="stock" value="<%= product.stock %>" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-4 py-2" required />
       </div>
-  
-      <!-- Description -->
+
+     
+
+      <!-- Weight -->
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Description</label>
-        <textarea name="description" rows="4" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 px-4 py-2"><%= product.description %></textarea>
+        <label class="block text-gray-700 font-medium mb-1">Weight</label>
+        <input type="text" name="weight" placeholder="Weight (e.g. 250g, 1kg)" value="<%= product.weight %>" 
+          class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
       </div>
-  
+
+      <!-- Ingredients -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Ingredients</label>
+        <textarea name="ingredients" placeholder="Ingredients (comma separated)" rows="3"
+          class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"><%= product.ingredients %></textarea>
+      </div>
+
+      <!-- About the Product -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">About the Product</label>
+        <textarea name="about" placeholder="About the product" rows="3"
+          class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"><%= product.about %></textarea>
+      </div>
+
       <!-- Images Upload -->
       <div>
         <label class="block text-gray-700 font-medium mb-2">Upload New Images</label>
-        <input type="file" name="images" multiple class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+        <input type="file" name="images" multiple
+          class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
       </div>
-  
+
       <!-- Existing Images Preview -->
       <% if (product.images && product.images.length > 0) { %>
-        <div>
-          <label class="block text-gray-700 font-medium mb-2">Existing Images</label>
-          <div class="flex flex-wrap gap-3">
-            <% product.images.forEach(img => { %>
-              <img src="<%= img %>" alt="Product Image" class="w-24 h-24 object-cover rounded border" />
-            <% }) %>
-          </div>
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">Existing Images</label>
+        <div class="flex flex-wrap gap-3">
+          <% product.images.forEach(img => { %>
+          <img src="<%= img %>" alt="Product Image" class="w-24 h-24 object-cover rounded border" />
+          <% }) %>
         </div>
+      </div>
       <% } %>
-  
+
       <!-- Submit Button -->
       <div class="pt-4">
-        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded shadow">
+        <button type="submit"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded shadow">
           Update Product
         </button>
       </div>
     </form>
   </div>
-  
+</body>
+
+</html>

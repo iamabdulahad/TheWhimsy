@@ -55,12 +55,11 @@ router.post("/", upload.array("images"), async (req, res) => {
       });
 
       imageUrls.push(result.secure_url);
-
-      // Delete file locally
-      fs.unlinkSync(file.path);
+      fs.unlinkSync(file.path); // remove local file
     }
 
-    const { name, price, category, stock, description } = req.body;
+    // destructure new fields
+    const { name, price, category, stock, description, weight, ingredients, about } = req.body;
 
     const newProduct = new Product({
       name,
@@ -68,23 +67,24 @@ router.post("/", upload.array("images"), async (req, res) => {
       category,
       stock,
       description,
+      weight,         // new
+      ingredients,    // new
+      about,          // new
       images: imageUrls,
     });
 
     await newProduct.save();
 
-    // Send the newly created product with a success message
     res.render("product-upload-success", {
       message: "Product created successfully!",
       product: newProduct,
     });
-    
-
   } catch (err) {
     console.error("❌ Error while uploading product:", err);
     res.status(500).send("Something went wrong while uploading product.");
   }
 });
+
 
 
 router.get("/delete/:id", validateAdmin, async function(req, res) {
@@ -135,7 +135,7 @@ fs.unlinkSync(file.path);
 }
 }
 
-const { name, price, category, stock, description } = req.body;
+const { name, price, category, stock, description, weight, ingredients, about  } = req.body;
 
 product.name = name;
 product.price = price;
@@ -143,6 +143,9 @@ product.category = category;
 product.stock = stock;
 product.description = description;
 product.images = imageUrls;
+product.weight = weight;
+product.ingredients = ingredients;
+product.about = about;
 
 await product.save();
 
