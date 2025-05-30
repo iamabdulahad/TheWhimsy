@@ -175,7 +175,7 @@
       <button 
         onclick="filterProducts('<%= category.name.toLowerCase() %>')" 
         style="background-color: <%= category.color ? category.color : '#f3f4f6' %>"
-        class="category-btn hover:brightness-105 text-black font-semibold px-6 py-2 rounded-full shadow-md transition"
+        class="category-btn hover:bg-gray-200  text-black font-semibold px-6 py-2 rounded-full shadow-md transition"
       >
         <%= category.name %>
       </button>
@@ -228,12 +228,12 @@
       </button>
     
       <!-- Scrollable Container -->
-      <div id="scrollContainer" class="flex gap-6 overflow-x-auto overflow-y-hidden scroll-smooth whitespace-nowrap px-6 no-scrollbar">
+      <div id="scrollContainer" class="overflow-x-auto overflow-y-hidden scroll-smooth whitespace-nowrap px-6 no-scrollbar">
         <!-- Product Cards -->
        
   
         <!-- Products Section -->
-<div id="products" class="flex whitespace-nowrap justify-center gap-6 px-4 py-16">
+<div id="products" class="flex whitespace-nowrap justify-start gap-6 px-4 py-16">
   <% products.forEach(product => { %>
     <a href="/products/<%= product._id %>">
       <div 
