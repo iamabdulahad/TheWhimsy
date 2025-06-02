@@ -298,7 +298,7 @@ router.post("/forgot-password", async (req, res) => {
         user.resetTokenExpiry = Date.now() + 15 * 60 * 1000;
         await user.save();
 
-        const resetLink = `http://localhost:3000/users/reset-password/${token}`;
+        const resetLink = `https://thewhimsy.onrender.com/users/reset-password/${token}`;
         await sendResetEmail(user.email, resetLink);
 
         
